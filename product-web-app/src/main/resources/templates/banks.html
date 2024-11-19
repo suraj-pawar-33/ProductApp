@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Fetch Example</h2>
+	<p id="Banks"></p>
+	<script>
+		fetch(`api/npd/bank`)
+		.then((res) => res.json())
+		.then((x) => {
+			for (var i = 0; i < x.length; i += 1) {
+				if (x[i]["key"]) {
+					document.getElementById("Banks").innerHTML +=
+					"<br/><b>" + x[i]["shortName"] + "</b> : " + x[i]["branch"] + ", " + x[i]["addressString"];
+				}
+			}
+		});
+	</script>
+</body>
+</html>

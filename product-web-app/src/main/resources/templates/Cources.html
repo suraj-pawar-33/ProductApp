@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Fetch Example</h2>
+	<p id="Cources"></p>
+	<script>
+		fetch(`/api/study/cources`)
+		.then((res) => res.json())
+		.then((x) => {
+			for (var i = 0; i < x.length; i += 1) {
+				if (x[i]["id"]) {
+					document.getElementById("Cources").innerHTML +=
+					"<br/><b>" + x[i]["name"] + "</b> : " + x[i]["author"];
+				}
+			}
+		});
+	</script>
+</body>
+</html>

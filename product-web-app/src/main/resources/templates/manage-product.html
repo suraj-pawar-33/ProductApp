@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <title>Visual Admin Dashboard - Manage Users</title>
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <!-- 
+    Visual Admin Template
+    https://templatemo.com/tm-455-visual-admin
+    -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+    <link href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/css/font-awesome.min.css'" rel="stylesheet">
+    <link href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/css/bootstrap.min.css'" rel="stylesheet">
+    <link href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/css/templatemo-style.css'" rel="stylesheet">
+    <link href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/css/popup-style.css'" rel="stylesheet">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>  
+    <!-- Left column -->
+    <div class="templatemo-flex-row">
+      <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="square"></div>
+          <h1>Visual Admin</h1>
+        </header>
+        <div class="profile-photo-container">
+          <img th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/images/profile-photo.jpg'" alt="Profile Photo" class="img-responsive">  
+          <div class="profile-photo-overlay"></div>
+        </div>      
+        <!-- Search box -->
+        <form class="templatemo-search-form" role="search">
+          <div class="input-group">
+              <button type="submit" class="fa fa-search"></button>
+              <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
+          </div>
+        </form>
+        <div class="mobile-menu-icon">
+            <i class="fa fa-bars"></i>
+          </div>
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/index'"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
+			<li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/manage-orders'"><i class="fa fa-map-marker fa-fw"></i>Orders</a></li>
+            <li><a href="#" class="active"><i class="fa fa-users fa-fw"></i>Manage Product</a></li>
+			<li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/manage-bank'"><i class="fa fa-map-marker fa-fw"></i>Manage Bank</a></li>
+			<li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/maps'"><i class="fa fa-map-marker fa-fw"></i>Maps</a></li>
+            <li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/manage-users'"><i class="fa fa-users fa-fw"></i>Manage Users</a></li>
+            <li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/preferences'"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
+            <li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/login'"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
+          </ul>  
+        </nav>
+      </div>
+      <!-- Main content --> 
+      <div class="templatemo-content col-1 light-gray-bg">
+        <div class="templatemo-top-nav-container">
+          <div class="row">
+            <nav class="templatemo-top-nav col-lg-12 col-md-12">
+              <ul class="text-uppercase">
+                <li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/manage-product'" class="active">Manage Products</a></li>
+                <li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/manage-product-new'" >Add New Product</a></li>
+                <li><a href="#">Update Product</a></li>
+                <li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/login'">Sign in form</a></li>
+              </ul>  
+            </nav> 
+          </div>
+        </div>
+        <div class="templatemo-content-container">
+         <!-- Search box -->
+         
+         <div class="templatemo-flex-row flex-content-row">
+	         <div class="templatemo-content-widget no-padding white-bg col-2">
+	         	<form class="templatemo-search-form" role="search">
+		          <div class="input-group">
+		              <button type="submit" class="fa fa-search"></button>
+		              <input type="text" class="main-search form-control" placeholder="Search" name="srch-term" id="srch-term">           
+		          </div>
+		        </form>
+	         </div>
+	         <div class="templatemo-content-widget no-padding col-1">
+		          <div class="input-group">
+		              <a href="#" class="form-control"  onclick="togglePopup()"><label class="control-label templatemo-block">Advance Search</label></a>
+		          </div>
+	         </div>
+         </div>       
+          <div class="h-75 templatemo-content-widget no-padding">
+            <div id="product-table" class="panel panel-default table-responsive" th:unless="${#lists.isEmpty(allProducts)}">
+               <table class="table table-striped table-bordered templatemo-user-table">
+                <thead>
+                  <tr>
+                    <td th:text="#{product.key}"><a href="" class="white-text templatemo-sort-by">Product Key <span class="caret"></span></a></td>
+                    <td th:text="#{product.productName}"><a href="" class="white-text templatemo-sort-by">Product Name <span class="caret"></span></a></td>
+                    <td th:text="#{product.productDetails}"><a href="" class="white-text templatemo-sort-by">Product Details <span class="caret"></span></a></td>
+                    <td th:text="#{product.proType.productTypeName}"><a href="" class="white-text templatemo-sort-by">Product Type <span class="caret"></span></a></td>
+                    <td th:text="#{product.cost}"><a href="" class="white-text templatemo-sort-by">Cost <span class="caret"></span></a></td>
+                    <td th:text="#{product.subscriCost}"><a href="" class="white-text templatemo-sort-by">Subscription Cost <span class="caret"></span></a></td>
+                    <td>Edit</td>
+                    <td>Delete</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="sb : ${allProducts}">
+                    <td th:text="${{sb.key}}">1</td>
+                    <td th:text="${{sb.productName}}">name</td>
+                    <td th:text="${{sb.productDetails}}">details</td>
+                    <td th:text="${{sb.proTypeString}}">plant</td>
+                    <td th:text="${{sb.cost}}">200</td>
+                    <td th:text="${{sb.subscriCost}}">200</td>
+                    <td><a href="" th:href="${'api/npd/product/update/manage-product-update/' + {sb.key}}" class="templatemo-edit-btn">Edit</a></td>
+                    <td><a href="" th:href="${'api/npd/product/update/manage-product-delete/' + {sb.key}}" class="templatemo-link">Delete</a></td>
+                  </tr>       
+                </tbody>
+              </table>  
+            </div>                          
+          </div>  <!-- Second row ends -->
+          
+          <div class="pagination-wrap">
+            <ul class="pagination">
+              <li th:each="no : ${pageCount}" th:class="${#strings.equals(no,currPage)} ? active : ''">
+              	<a href="#" th:text="${{no}}" th:href="@{'http://'+ ${@environment.getProperty('server.hostname')} + ':' 
+              	+ ${@environment.getProperty('server.port')}} + ${'/manage-product/page=' + {no}}
+              	+ ${product.productName != null || product.productDetails != null || product.proTypeKey != 0 ? '?productName=' + {product.productName} 
+              	+ '&productDetails=' + {product.productDetails} 
+              	+ '&proTypeKey=' + {product.proTypeKey != 0 ? product.proTypeKey : 0} + '' : ''}"
+              	>1</a>
+              </li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true"><i class="fa fa-play"></i></span>
+                </a>
+              </li>
+            </ul>
+          </div>          
+          <footer class="text-right">
+            <p>Copyright &copy; 2084 Company Name 
+            | Design: Template Mo</p>
+          </footer>         
+        </div>
+      </div>
+    </div>
+    
+         <!-- Search popup box -->
+          <div id="popupOverlay" 
+         			class="overlay-container">
+	        <div class="popup-box">
+		        <i class="fa fa-times"></i>
+	            <form action="index.html" class="form-container" th:action="@{'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} 
+	            															+ '/manage-product/page=1'}"
+	            	th:object="${product}" enctype="multipart/form-data">
+	              <div class="form-group align-items-end">
+	                <div class="form-group"> 
+	                	<div class="form-group"> 
+	                    	<label class="control-label templatemo-block">Product Name</label> 
+	                    	<input type="text" th:field="*{productName}" class="form-control" id="inputProductName" placeholder="Product Name"> 
+	                    </div>
+	                    <div class="form-group">
+	                    	<label class="control-label templatemo-block">Product Details</label> 
+	                    	<input type="text" th:field="*{productDetails}" class="form-control" id="inputProductDetails" placeholder="Product Details">                  
+	                	</div>
+	                </div>
+	                <div class="form-group">    
+	                    <label class="control-label templatemo-block">Product Type</label>                 
+		                <select multiple class="templatemo-multi-select form-control" th:field="*{proTypeKey}" th:value=0 style="overflow-y: scroll;">
+		                    <option th:value="0" th:selected=true>Select</option> 
+		                    <option th:each="type : ${allProductTypes}" 
+							        th:value="${type.key}" 
+						        th:text="${type.productTypeName}">Select</option>                   
+		                </select>                
+	                </div>
+	                <div class="form-group">
+	                	<button type="submit" class="templatemo-blue-button">Add filters</button>
+	              	</div> 
+	              </div>                          
+	            </form>
+	          </div> 
+          </div>
+    <!-- JS -->
+    <script type="text/javascript" th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/js/jquery-1.11.2.min.js'"></script>      <!-- jQuery -->
+    <script type="text/javascript" th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/js/templatemo-script.js'"></script>      <!-- Templatemo Script -->
+    <script>
+      $(document).ready(function(){
+        // Content widget with background image
+        var imageUrl = $('img.content-bg-img').attr('src');
+        $('.templatemo-content-img-bg').css('background-image', 'url(' + imageUrl + ')');
+        $('img.content-bg-img').hide();        
+      });
+    </script>
+    
+    <script>
+        function togglePopup() {
+            const overlay = document.getElementById('popupOverlay');
+            overlay.classList.toggle('show-popup');
+        }
+    </script>
+    <script type="text/javascript" th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/js/common-script.js'"></script>
+  </body>
+</html>

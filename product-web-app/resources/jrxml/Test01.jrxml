@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2023-07-28T00:33:27 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Test01" pageWidth="300" pageHeight="500" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0376c392-fc24-4a29-9421-5b8d7776686d">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="P_PRODUCT" class="java.lang.String"/>
+	<parameter name="P_COST" class="java.lang.String"/>
+	<parameter name="USER" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="bankKey" class="java.lang.String"/>
+	<field name="key" class="java.lang.Integer"/>
+	<field name="placedDate" class="java.lang.String"/>
+	<field name="billNumber" class="java.lang.Integer"/>
+	<field name="orderType" class="java.lang.String"/>
+	<field name="bankname" class="java.lang.String"/>
+	<field name="totalAmount" class="java.lang.Integer"/>
+	<field name="status" class="java.lang.String"/>
+	<variable name="currentDate" class="java.lang.String">
+		<variableExpression><![CDATA[new SimpleDateFormat("dd/MM/yy").format(new Date())]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="14" uuid="7c842813-015b-42bf-85fe-002e30562bbb"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Bill No.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="0" width="180" height="15" uuid="90700ac4-8590-436f-91d0-b9386bd826a3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="80" y="0" width="180" height="15" isRemoveLineWhenBlank="true" uuid="9d69ca02-01bb-49c7-91c3-df7b964ca90d">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{key}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="14" uuid="e98fc47e-96f8-4f92-85c3-317a34e5d9f5">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[order key]]></text>
+			</staticText>
+		</band>
+		<band height="15">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="14" uuid="6638b3eb-e8a4-4363-879b-3522d573227d">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[bank name]]></text>
+			</staticText>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="80" y="0" width="180" height="15" isRemoveLineWhenBlank="true" uuid="92286ce7-0cc6-4915-8d2e-af2e75ebf046">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bankname}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="14" uuid="df47fe9a-f6c4-440a-aa65-8eebf5a38c37">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[placed date]]></text>
+			</staticText>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="80" y="0" width="180" height="15" isRemoveLineWhenBlank="true" uuid="9e2a9faf-a91b-40fc-b31e-495fd616e17e">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{placedDate}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="14" uuid="ff440582-e970-48b8-96f8-bb9b6f434a2c">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[total amount]]></text>
+			</staticText>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="80" y="0" width="180" height="15" isRemoveLineWhenBlank="true" uuid="1aa75849-f7f0-4d67-9319-b0a3ad342e3c">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="140" height="15" uuid="7b8bcdef-f951-4cd4-98c7-57552886f426">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Printed by Suraj"]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="0" y="15" width="254" height="15" uuid="36da9208-3832-4fb8-adc2-7e5bd0cddd3c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

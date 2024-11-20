@@ -45,10 +45,10 @@ public class Orders{
 
     @JsonProperty("Date Order Paid")
     @Column(nullable = true, unique = true, name = "date_order_paid")
-    private String dateOrderPaid;
+    private Timestamp dateOrderPaid;
 
     @JsonIgnore
-    @Column(nullable = true, insertable=false, updatable = false, unique = true, name = "bank_key")
+    @Column(nullable = false, unique = true, name = "bank_key")
     private int bankKey;
 
     @JsonIgnore
@@ -74,7 +74,7 @@ public class Orders{
     private LocalDateTime lastModifiedTime;
     
     @ManyToOne
-    @JoinColumn(name = "bank_key", referencedColumnName = "bank_key")
+    @JoinColumn(name = "bank_key", insertable=false, updatable = false, referencedColumnName = "bank_key")
     private Bank bank;
     
     @JsonIgnore
@@ -110,16 +110,16 @@ public class Orders{
 		return dateOrderPlaced;
 	}
 
-	public void setDateOrderPlaced(Timestamp dateOrderPlaced) {
-		this.dateOrderPlaced = dateOrderPlaced;
+	public void setDateOrderPlaced(String dateOrderPlaced) {
+		this.dateOrderPlaced = Timestamp.valueOf(LocalDateTime.parse(dateOrderPlaced));;
 	}
 
-	public String getDateOrderPaid() {
+	public Timestamp getDateOrderPaid() {
 		return dateOrderPaid;
 	}
 
 	public void setDateOrderPaid(String dateOrderPaid) {
-		this.dateOrderPaid = dateOrderPaid;
+		this.dateOrderPaid = Timestamp.valueOf(LocalDateTime.parse(dateOrderPaid));
 	}
 
 	public int getBankKey() {

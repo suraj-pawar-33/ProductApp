@@ -18,11 +18,13 @@ import com.apps.digiple.npdapp.bean.Address;
 import com.apps.digiple.npdapp.bean.Bank;
 import com.apps.digiple.npdapp.bean.OrderType;
 import com.apps.digiple.npdapp.bean.Orders;
+import com.apps.digiple.npdapp.bean.Product;
 import com.apps.digiple.npdapp.bean.ProductType;
 import com.apps.digiple.npdapp.bean.Status;
 import com.apps.digiple.npdapp.db.IBankRespository;
 import com.apps.digiple.npdapp.db.IOrderTypeRespository;
 import com.apps.digiple.npdapp.db.IOrdersRespository;
+import com.apps.digiple.npdapp.db.IProductRespository;
 import com.apps.digiple.npdapp.db.IStatusRespository;
 
 @Controller
@@ -40,11 +42,36 @@ public class OrdersController {
 	IStatusRespository statusRespository;	
 	
 	@Autowired
-	IBankRespository bankRespository;	
-
+	IBankRespository bankRespository;
+	
+	@Autowired
+	IProductRespository productRespository;
+	
+	@ModelAttribute("allProducts")
+	public List<Product> populateProducts() {
+		return productRespository.findAll();
+	}
+	
 	@GetMapping("/manage-order-new")
 	public String getAddNewOrder(Model model) {
+		return getAddNewOrder("1", model);
+	}
+
+	@GetMapping("/manage-order-new/product={pageNo}")
+	public String getAddNewOrder(@PathVariable String pageNo, Model model) {
 		model.addAttribute("order", new Orders());
+		List<Integer> pageNumList = new ArrayList<>();
+		if (pageNo.matches("-?(0|[1-9]\\d*)")) {
+			Page<Product> list;
+			list = productRespository.findAll(
+					PageRequest.of(Integer.valueOf(pageNo) - 1, 10));
+			for (int i = 1; i <= list.getTotalPages(); i++) {
+				pageNumList.add(i);				
+			}
+			model.addAttribute("pageCount", pageNumList);
+			model.addAttribute("allProducts", list.getContent());
+			model.addAttribute("currPage", pageNo);
+		}
 		return "manage-order-new";
 	}
 

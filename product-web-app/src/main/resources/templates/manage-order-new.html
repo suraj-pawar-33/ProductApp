@@ -65,7 +65,7 @@
           <div class="row">
             <nav class="templatemo-top-nav col-lg-12 col-md-12">
               <ul class="text-uppercase">
-                <li><a href="manage-product">Manage Orders</a></li>
+                <li><a href="manage-orders">Manage Orders</a></li>
                 <li><a href="#" class="active">Add New Order</a></li>
                 <li><a href="#">Update Order</a></li>
                 <li><a href="login">Sign in form</a></li>
@@ -127,17 +127,44 @@
                 </div>                
               </div>              
             </div>
+			<!-- Product selection -->
             <div class="col-1">              
-              <div class="templatemo-content-widget pink-bg">
-                <i class="fa fa-times"></i>                
-                <h2 class="text-uppercase margin-bottom-10">Latest Data</h2>
-                <p class="margin-bottom-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mi sapien, fringilla at orci nec, viverra rhoncus leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus erat non purus commodo, sit amet varius dolor sagittis.</p>                  
-              </div>            
-              <div class="templatemo-content-widget blue-bg">
-                <i class="fa fa-times"></i>
-                <h2 class="text-uppercase margin-bottom-10">Older Data</h2>
-                <p class="margin-bottom-0">Phasellus dapibus nulla quis risus auctor, non placerat augue consectetur. Aliquam convallis pharetra odio, in convallis erat molestie sed. Fusce mi lacus, semper sit amet mattis eu, volutpat vitae enim.</p>                
-              </div>            
+				<div class="h-75 templatemo-content-widget no-padding">
+		            <div id="product-table" class="panel panel-default table-responsive" th:unless="${#lists.isEmpty(allProducts)}">
+		               <table class="table table-striped table-bordered templatemo-user-table">
+		                <thead>
+		                  <tr>
+		                    <td th:text="#{product.productName}"><a href="" class="white-text templatemo-sort-by">Product Name <span class="caret"></span></a></td>
+		                    <td th:text="#{product.proType.productTypeName}"><a href="" class="white-text templatemo-sort-by">Product Type <span class="caret"></span></a></td>
+		                    <td th:text="#{product.cost}"><a href="" class="white-text templatemo-sort-by">Cost <span class="caret"></span></a></td>
+		                    <td th:text="#{product.subscriCost}"><a href="" class="white-text templatemo-sort-by">Subscription Cost <span class="caret"></span></a></td>
+		                  </tr>
+		                </thead>
+		                <tbody>
+		                  <tr th:each="sb : ${allProducts}">
+		                    <td th:text="${{sb.productName}}">name</td>
+		                    <td th:text="${{sb.proTypeString}}">plant</td>
+		                    <td th:text="${{sb.cost}}">200</td>
+		                    <td th:text="${{sb.subscriCost}}">200</td>
+		                  </tr>       
+		                </tbody>
+		              </table>  
+		            </div>  
+				  <div class="pagination-wrap">
+				    <ul class="pagination">
+				      <li th:each="no : ${pageCount}" th:class="${#strings.equals(no,currPage)} ? active : ''">
+				      	<a href="#" th:text="${{no}}" th:href="@{'http://'+ ${@environment.getProperty('server.hostname')} + ':' 
+				      	+ ${@environment.getProperty('server.port')}} + ${'/manage-product/page=' + {no}}"
+				      	>1</a>
+				      </li>
+				      <li>
+				        <a href="#" aria-label="Next">
+				          <span aria-hidden="true"><i class="fa fa-play"></i></span>
+				        </a>
+				      </li>
+				    </ul>
+				  </div>                          
+		        </div>                     
             </div>                       
           </div>  <!-- Second row ends -->
           <div class="templatemo-flex-row flex-content-row">

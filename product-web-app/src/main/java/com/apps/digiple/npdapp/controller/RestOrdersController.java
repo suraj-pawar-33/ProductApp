@@ -39,7 +39,7 @@ public class RestOrdersController {
 
 	@PostMapping("/order/create")
 	public ModelAndView createProduct(@ModelAttribute Orders order, Model model){
-		model.addAttribute("product", order);
+		model.addAttribute("order", order);
 		try {
 			orderRespository.save(order);
 		}

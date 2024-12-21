@@ -144,9 +144,11 @@
 		                  <tr th:each="sb : ${allProducts}">
 		                    <td th:text="${{sb.productName}}">name</td>
 		                    <td th:text="${{sb.proTypeString}}">plant</td>
-		                    <td th:text="${{sb.cost}}">200</td>
+		                    <td>
+								<input type="number" class="form-control" id="productName" placeholder="0">
+							</td>
 		                    <td th:text="${{sb.subscriCost}}">200</td>
-		                  </tr>       
+		                  </tr>     
 		                </tbody>
 		              </table>  
 		            </div>  

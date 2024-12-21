@@ -26,6 +26,7 @@ import com.apps.digiple.npdapp.db.IOrderTypeRespository;
 import com.apps.digiple.npdapp.db.IOrdersRespository;
 import com.apps.digiple.npdapp.db.IProductRespository;
 import com.apps.digiple.npdapp.db.IStatusRespository;
+import com.apps.digiple.npdapp.utils.OrderHelper;
 
 @Controller
 public class OrdersController {
@@ -68,8 +69,9 @@ public class OrdersController {
 			for (int i = 1; i <= list.getTotalPages(); i++) {
 				pageNumList.add(i);				
 			}
+			List<Product> orderProducts = OrderHelper.renewProducts(list.getContent());
 			model.addAttribute("pageCount", pageNumList);
-			model.addAttribute("allProducts", list.getContent());
+			model.addAttribute("allProducts", orderProducts);
 			model.addAttribute("currPage", pageNo);
 		}
 		return "manage-order-new";

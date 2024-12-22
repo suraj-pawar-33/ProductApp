@@ -2,6 +2,7 @@ package com.apps.digiple.npdapp.bean;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -86,9 +88,22 @@ public class Orders{
     @ManyToOne
     @JoinColumn(name = "status_key", insertable=false, updatable = false, referencedColumnName = "status_key")
     private Status status;
+    
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "order_key", insertable=false, updatable = false, referencedColumnName = "order_key")
+    private List<Order2Product> order2product;
 
     
-    public Orders() {  }
+    public List<Order2Product> getOrder2product() {
+		return order2product;
+	}
+
+	public void setOrder2product(List<Order2Product> order2product) {
+		this.order2product = order2product;
+	}
+
+	public Orders() {  }
     
 	public int getKey() {
 		return key;

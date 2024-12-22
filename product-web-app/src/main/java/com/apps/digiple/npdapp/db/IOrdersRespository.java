@@ -20,7 +20,7 @@ public interface IOrdersRespository extends PagingAndSortingRepository<Orders, I
 	
 	Page<Orders> findAllByBillNumber(int billNumber, Pageable pagable);
 
-	Orders save(Orders product);
+	Orders save(Orders order);
 
 	Page<Orders> findAllByBankKey(int bankKey, PageRequest of);
 

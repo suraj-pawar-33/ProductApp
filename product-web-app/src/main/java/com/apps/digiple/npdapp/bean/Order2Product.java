@@ -2,11 +2,14 @@ package com.apps.digiple.npdapp.bean;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -34,6 +37,14 @@ public class Order2Product {
 	@JsonProperty("Product key")
 	@Column(nullable = false, unique = true, name = "product_key")
 	private int productKey;
+	
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_key", insertable=false, updatable = false, referencedColumnName = "product_key")
+	private Product product;
+	
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_key", insertable=false, updatable = false, referencedColumnName = "order_key")
+	private Orders order;
 
 	@JsonProperty("Quantity")
 	@Column(nullable = false, unique = true, name = "quantity")
@@ -85,6 +96,22 @@ public class Order2Product {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public Orders getOrder() {
+		return order;
+	}
+
+	public void setOrder(Orders order) {
+		this.order = order;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public LocalDateTime getCreationTime() {

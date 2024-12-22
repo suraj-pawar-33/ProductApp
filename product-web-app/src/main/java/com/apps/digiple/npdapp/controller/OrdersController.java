@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.apps.digiple.npdapp.bean.Address;
 import com.apps.digiple.npdapp.bean.Bank;
+import com.apps.digiple.npdapp.bean.Order2Product;
 import com.apps.digiple.npdapp.bean.OrderType;
 import com.apps.digiple.npdapp.bean.Orders;
 import com.apps.digiple.npdapp.bean.Product;
@@ -60,8 +61,8 @@ public class OrdersController {
 
 	@GetMapping("/manage-order-new/product={pageNo}")
 	public String getAddNewOrder(@PathVariable String pageNo, Model model) {
-		model.addAttribute("order", new Orders());
 		List<Integer> pageNumList = new ArrayList<>();
+		Orders order = new Orders();
 		if (pageNo.matches("-?(0|[1-9]\\d*)")) {
 			Page<Product> list;
 			list = productRespository.findAll(
@@ -69,11 +70,12 @@ public class OrdersController {
 			for (int i = 1; i <= list.getTotalPages(); i++) {
 				pageNumList.add(i);				
 			}
-			List<Product> orderProducts = OrderHelper.renewProducts(list.getContent());
+			List<Order2Product> orderProducts = OrderHelper.createO2PProducts(list.getContent());
+			order.setOrder2product(orderProducts);
 			model.addAttribute("pageCount", pageNumList);
-			model.addAttribute("allProducts", orderProducts);
 			model.addAttribute("currPage", pageNo);
 		}
+		model.addAttribute("order", order);
 		return "manage-order-new";
 	}
 

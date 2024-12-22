@@ -1,5 +1,6 @@
 package com.apps.digiple.npdapp.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.apps.digiple.npdapp.bean.Order2Product;
 import com.apps.digiple.npdapp.bean.Orders;
+import com.apps.digiple.npdapp.db.IOrder2ProductRespository;
 import com.apps.digiple.npdapp.db.IOrderTypeRespository;
 import com.apps.digiple.npdapp.db.IOrdersRespository;
+import com.apps.digiple.npdapp.utils.OrderHelper;
 
 @RestController
 @RequestMapping("/api/npd")
@@ -25,6 +29,9 @@ public class RestOrdersController {
 	
 	@Autowired
 	IOrderTypeRespository orderTypeRespository;
+	
+	@Autowired
+	IOrder2ProductRespository order2productRespository;
 	
 	@Autowired
 	private MessageSource messageSource;
@@ -40,12 +47,25 @@ public class RestOrdersController {
 	@PostMapping("/order/create")
 	public ModelAndView createProduct(@ModelAttribute Orders order, Model model){
 		model.addAttribute("order", order);
+
+		List<Order2Product> o2pList = OrderHelper.removeEmptyO2PProducts(order);
+		Orders newOrder = null;
 		try {
-			orderRespository.save(order);
+			newOrder = orderRespository.save(order);
 		}
 		catch (Exception e) {
 			return getErrorPage(e, model);
 		}
+		for (Order2Product order2Product : o2pList) {
+			try {
+				order2Product.setOrderKey(newOrder.getKey());
+				order2productRespository.save(order2Product);
+			}
+			catch (Exception e) {
+				return getErrorPage(e, model);
+			}
+		}
+		
 		Object[] ob = {order.getBillNumber()};
 		model.addAttribute("message", messageSource.getMessage("order.msg.create", ob , Locale.ENGLISH));
 		model.addAttribute("status", "Created");

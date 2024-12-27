@@ -2,10 +2,13 @@ package com.apps.digiple.npdapp.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.apps.digiple.npdapp.bean.Address;
 import com.apps.digiple.npdapp.bean.Bank;
@@ -36,6 +40,9 @@ public class OrdersController {
 	
 	@Autowired
 	IOrdersRespository ordersRespository;	
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 	@Autowired
 	IOrderTypeRespository orderTypeRespository;	
@@ -78,6 +85,35 @@ public class OrdersController {
 		model.addAttribute("order", order);
 		return "manage-order-new";
 	}
+	
+	@GetMapping("/manage-order-update/product={pageNo},{id}")
+	public String getUpdateProduct(@PathVariable String id, @PathVariable String pageNo, Model model){
+
+		List<Integer> pageNumList = new ArrayList<>();
+		if (id.matches("-?(0|[1-9]\\d*)") && pageNo.matches("-?(0|[1-9]\\d*)")) {
+			Orders order = ordersRespository.findByIdOrError(Integer.valueOf(id));
+			Page<Product> list;
+			list = productRespository.findAll(
+					PageRequest.of(Integer.valueOf(pageNo) - 1, 10));
+			List<Order2Product> orderProducts = OrderHelper.createO2PProducts(list.getContent(), order);
+			order.setOrder2product(orderProducts);
+			for (int i = 1; i <= list.getTotalPages(); i++) {
+				pageNumList.add(i);				
+			}
+			model.addAttribute("pageCount", pageNumList);
+			model.addAttribute("currPage", pageNo);
+			model.addAttribute("order", order);
+			model.addAttribute("id", id);
+		} else {
+			Object[] ob = {id};
+			model.addAttribute("message", messageSource.getMessage("order.err.id", ob , Locale.ENGLISH));
+			model.addAttribute("status", "Message");
+			return "error";
+		}
+		
+		return "manage-order-update";
+	}
+
 
 	@ModelAttribute("allOrderTypes")
 	public List<OrderType> populateOrderTypes() {

@@ -53,9 +53,11 @@ public class Address {
     @Column(name = "other")
 	private String other;
 
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @Column(name = "creation_time")
 	private String addCreationTime;
 
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @Column(name = "last_modified_time")
 	private String addLastModifiedTime;
 

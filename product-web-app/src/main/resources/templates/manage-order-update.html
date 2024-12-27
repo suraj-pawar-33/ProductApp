@@ -12,11 +12,11 @@
     Visual Admin Template
     https://templatemo.com/tm-455-visual-admin
     -->
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-		<link href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/css/font-awesome.min.css'" rel="stylesheet">
-		<link href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/css/bootstrap.min.css'" rel="stylesheet">
-		<link href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/css/templatemo-style.css'" rel="stylesheet">
-
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+    <link href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/css/font-awesome.min.css'" rel="stylesheet">
+    <link href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/css/bootstrap.min.css'" rel="stylesheet">
+    <link href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/css/templatemo-style.css'" rel="stylesheet">
+    
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -35,7 +35,7 @@
 					<h1>New Order</h1>
 				</header>
 				<div class="profile-photo-container">
-					<img src="images/profile-photo.jpg" alt="Profile Photo" class="img-responsive">
+					<img th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/images/profile-photo.jpg'" alt="Profile Photo" class="img-responsive">
 					<div class="profile-photo-overlay"></div>
 				</div>
 				<!-- Search box -->
@@ -81,16 +81,16 @@
 					<div class="row">
 						<nav class="templatemo-top-nav col-lg-12 col-md-12">
 							<ul class="text-uppercase">
-							<li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/manage-orders'">Manage Orders</a></li>
-							<li><a href="#" class="active" >Add New Order</a></li>
-							<li><a href="#">Update Order</a></li>
-							<li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/login'">Sign in form</a></li>
-</ul>
+				                <li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/manage-orders'">Manage Orders</a></li>
+				                <li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/manage-order-new'" >Add New Order</a></li>
+				                <li><a href="#"class="active">Update Order</a></li>
+				                <li><a th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/login'">Sign in form</a></li>
+							</ul>
 						</nav>
 					</div>
 				</div>
 				<div class="templatemo-content-container">
-					<form class="templatemo-login-form" action="#" th:action="@{api/npd/order/create}"
+					<form class="templatemo-login-form" action="#" th:action="@{'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/api/npd/order/update'}"
 						th:object="${order}" method="post">
 						<div class="templatemo-flex-row flex-content-row">
 							<div class="col-1">
@@ -101,6 +101,7 @@
 									<div class="panel-body">
 										<div class="form-group">
 											<label for="billNumber">Bill Number</label>
+                      						<input type="hidden" th:field="*{key}" class="form-control" id="orderKey">
 											<input type="text" th:field="*{billNumber}" class="form-control"
 												id="billNumber" placeholder="Enter bill number">
 										</div>
@@ -172,6 +173,7 @@
 											<tbody>
 												<tr th:fragment="order2product" th:each="o2p,rowStat : ${order.order2product}" th:id="${rowStat.count}">
 													<td th:text="${rowStat.count}">1</td>
+													<input type="hidden" th:attr="name='order2product[__${rowStat.index}__].key'"  th:value="${o2p.key}">
 													<input type="hidden" th:attr="name='order2product[__${rowStat.index}__].productKey'"  th:value="${o2p.product.key}">
 													<input type="hidden" th:attr="name='order2product[__${rowStat.index}__].orderKey'"  th:value="${order.key}">
 													<td th:text="${{o2p.product.productName}}">
@@ -195,7 +197,7 @@
 											<li th:each="no : ${pageCount}"
 												th:class="${#strings.equals(no,currPage)} ? active : ''">
 												<a href="#" th:text="${{no}}" th:href="@{'http://'+ ${@environment.getProperty('server.hostname')} + ':' 
-				      								+ ${@environment.getProperty('server.port')}} + ${'/manage-order-new/product=' + {no}}">1</a>
+				      								+ ${@environment.getProperty('server.port')}} + ${'manage-order-update/product=' + {no} + ',' + {id}}">1</a>
 											</li>
 											<li>
 												<a href="#" aria-label="Next">
@@ -206,7 +208,7 @@
 									</div>
 									<div class="col-1">
 										<div class="form-group">
-											<button type="submit" class="templatemo-blue-button">Submit</button>
+											<button type="submit" class="templatemo-blue-button">Update</button>
 										</div>
 									</div>
 								</div>
@@ -220,7 +222,7 @@
 								<div class="media-left padding-right-25">
 									<a href="#">
 										<img class="media-object img-circle templatemo-img-bordered"
-											src="images/person.jpg" alt="Sunset">
+											th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/images/person.jpg'" alt="Sunset">
 									</a>
 								</div>
 								<div class="media-body">
@@ -265,7 +267,7 @@
 						</div>
 						<div class="templatemo-content-widget white-bg col-1 text-center templatemo-position-relative">
 							<i class="fa fa-times"></i>
-							<img src="images/person.jpg" alt="Bicycle"
+							<img th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/images/person.jpg'" alt="Bicycle"
 								class="img-circle img-thumbnail margin-bottom-30">
 							<h2 class="text-uppercase blue-text margin-bottom-5">Paul Smith</h2>
 							<h3 class="text-uppercase margin-bottom-70">Managing Director</h3>
@@ -283,7 +285,7 @@
 						</div>
 						<div
 							class="templatemo-content-widget white-bg col-1 templatemo-position-relative templatemo-content-img-bg">
-							<img src="images/sunset-big.jpg" alt="Sunset" class="img-responsive content-bg-img">
+							<img th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/images/sunset-big.jpg'" alt="Sunset" class="img-responsive content-bg-img">
 							<i class="fa fa-heart"></i>
 							<h2 class="templatemo-position-relative white-text">Sunset</h2>
 							<div class="view-img-btn-wrap">
@@ -316,8 +318,8 @@
 		
 
 		<!-- JS -->
-		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> <!-- jQuery -->
-		<script type="text/javascript" src="js/templatemo-script.js"></script> <!-- Templatemo Script -->
+		<script type="text/javascript" th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/js/jquery-1.11.2.min.js'"></script> <!-- jQuery -->
+		<script type="text/javascript" th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/js/templatemo-script.js'"></script> <!-- Templatemo Script -->
 		<script>
 			$(document).ready(function () {
 				// Content widget with background image
@@ -326,8 +328,8 @@
 				$('img.content-bg-img').hide();
 			});
 		</script>
-		<script type="text/javascript" src="js/common-script.js"></script>
-		<script type="text/javascript" src="js/orderview-script.js"></script>
+		<script type="text/javascript" th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/js/common-script.js'"></script>
+		<script type="text/javascript" th:src="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + '/js/orderview-script.js'"></script>
 	</body>
 
 </html>

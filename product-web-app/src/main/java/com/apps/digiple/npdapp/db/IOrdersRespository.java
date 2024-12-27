@@ -2,6 +2,8 @@ package com.apps.digiple.npdapp.db;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,10 @@ public interface IOrdersRespository extends PagingAndSortingRepository<Orders, I
 
 	  // custom query to search orders by bill number
 //	TODO : add type bank and status
+	
+	default Orders findByIdOrError(Integer id) {
+        return findById(id).orElseThrow(EntityNotFoundException::new);
+    } 
 	
 	List<Orders> findAll();
 	

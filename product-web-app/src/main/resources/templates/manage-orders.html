@@ -115,7 +115,7 @@
                     <td th:text="${{sb.orderType.ordTypeName}}">plant</td>
                     <td th:text="${{sb.totalAmount}}">200</td>
                     <td th:text="${{sb.status.statusName}}">200</td>
-                    <td><a href="" th:href="${'api/npd/orders/update/manage-order-update/' + {sb.key}}" class="templatemo-edit-btn">Edit</a></td>
+                    <td><a href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + ${'/manage-order-update/product=1,' + {sb.key}}" class="templatemo-edit-btn">Edit</a></td>
                     <td><a href="" th:href="${'api/npd/orders/update/manage-order-delete/' + {sb.key}}" class="templatemo-link">Delete</a></td>
                   </tr>       
                 </tbody>

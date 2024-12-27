@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,10 +43,12 @@ public class Orders{
     private int billNumber;
 
     @JsonProperty("Date Order Placed")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(nullable = false, unique = true, name = "date_order_placed")
     private Timestamp dateOrderPlaced;
 
     @JsonProperty("Date Order Paid")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(nullable = true, unique = true, name = "date_order_paid")
     private Timestamp dateOrderPaid;
 
@@ -89,7 +92,6 @@ public class Orders{
     @JoinColumn(name = "status_key", insertable=false, updatable = false, referencedColumnName = "status_key")
     private Status status;
     
-    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "order_key", insertable=false, updatable = false, referencedColumnName = "order_key")
     private List<Order2Product> order2product;
@@ -121,16 +123,16 @@ public class Orders{
 		this.billNumber = billNumber;
 	}
 
-	public Timestamp getDateOrderPlaced() {
-		return dateOrderPlaced;
+	public String getDateOrderPlaced() {
+		return dateOrderPlaced != null ? dateOrderPlaced.toString() : null;
 	}
 
 	public void setDateOrderPlaced(String dateOrderPlaced) {
 		this.dateOrderPlaced = Timestamp.valueOf(LocalDateTime.parse(dateOrderPlaced));;
 	}
 
-	public Timestamp getDateOrderPaid() {
-		return dateOrderPaid;
+	public String getDateOrderPaid() {
+		return dateOrderPaid != null ? dateOrderPaid.toString() : null;
 	}
 
 	public void setDateOrderPaid(String dateOrderPaid) {

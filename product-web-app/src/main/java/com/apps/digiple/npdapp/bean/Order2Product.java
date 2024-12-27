@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -54,17 +55,25 @@ public class Order2Product {
 	@Column(nullable = false, unique = true, name = "amount")
 	private int amount;
 
-	// @JsonProperty("Creation Time")
-	@JsonIgnore
-	@CreationTimestamp
+	@JsonProperty("Creation Time")
+//	@JsonIgnore
+	@Transient
 	@Column(nullable = true, unique = true, name = "creation_time")
 	private LocalDateTime creationTime;
 
-	// @JsonProperty("Last Modified Time")
-	@JsonIgnore
-	@LastModifiedDate
+	@JsonProperty("Last Modified Time")
+//	@JsonIgnore
+	@Transient
 	@Column(nullable = true, unique = true, name = "last_modified_time")
 	private LocalDateTime lastModifiedTime;
+
+	public int getKey() {
+		return key;
+	}
+
+	public void setKey(int key) {
+		this.key = key;
+	}
 
 	public int getOrderKey() {
 		return orderKey;
@@ -118,15 +127,7 @@ public class Order2Product {
 		return creationTime;
 	}
 
-	public void setCreationTime(LocalDateTime creationTime) {
-		this.creationTime = creationTime;
-	}
-
 	public LocalDateTime getLastModifiedTime() {
 		return lastModifiedTime;
-	}
-
-	public void setLastModifiedTime(LocalDateTime lastModifiedTime) {
-		this.lastModifiedTime = lastModifiedTime;
 	}
 }

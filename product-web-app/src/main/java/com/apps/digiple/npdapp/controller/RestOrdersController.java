@@ -1,21 +1,30 @@
 package com.apps.digiple.npdapp.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +35,8 @@ import com.apps.digiple.npdapp.db.IOrder2ProductRespository;
 import com.apps.digiple.npdapp.db.IOrderTypeRespository;
 import com.apps.digiple.npdapp.db.IOrdersRespository;
 import com.apps.digiple.npdapp.db.IProductRespository;
+import com.apps.digiple.npdapp.reports.JasperProduct;
+import com.apps.digiple.npdapp.reports.ReportPrintHelper;
 import com.apps.digiple.npdapp.utils.OrderHelper;
 
 @RestController
@@ -132,6 +143,28 @@ public class RestOrdersController {
 			model.addAttribute("status", "Message");
 			return new ModelAndView("error");
 		}
+	}
+    @RequestMapping(value = "/orders/invoice/{id}", method = RequestMethod.GET, produces = {"application/pdf"})
+    @ResponseBody
+//	@GetMapping(value="/product/download/{id}")
+	public FileSystemResource downloadFile(@PathVariable String id) {
+
+		String destPath = "resources/pdf/";
+		if (id.matches("-?(0|[1-9]\\d*)")) {
+		    Orders order = orderRespository.findByIdOrError(Integer.valueOf(id));
+		    Map<String, Object> params = new HashMap<String, Object>();
+		    params.put("orderKey", order.getKey());
+		    params.put("billNumber", order.getBillNumber());
+		    params.put("placedDate", order.getDateOrderPlaced());
+		    params.put("bankName", order.getBank().getBankName());
+		    params.put("status", order.getStatus().getStatusName());
+		    params.put("orderType", order.getOrderType().getOrdTypeName());
+		    params.put("totalAmount", order.getTotalAmount());
+		    destPath = StringUtils.join(destPath, order.getBillNumber(), ".pdf");
+		    Collection<JasperProduct>  list = OrderHelper.LoadJasperProduct(order.getOrder2product());
+			ReportPrintHelper.generate(params, list, destPath);
+		}
+	    return new FileSystemResource(new File(destPath));
 	}
 	
 	private ModelAndView getErrorPage(Exception e, Model model) {

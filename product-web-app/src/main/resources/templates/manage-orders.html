@@ -105,6 +105,7 @@
                     <td th:text="#{order.status.statusName}"><a href="" class="white-text templatemo-sort-by">Order Status<span class="caret"></span></a></td>
                     <td>Edit</td>
                     <td>Delete</td>
+                    <td>Invoice</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -116,7 +117,8 @@
                     <td th:text="${{sb.totalAmount}}">200</td>
                     <td th:text="${{sb.status.statusName}}">200</td>
                     <td><a href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + ${'/manage-order-update/product=1,' + {sb.key}}" class="templatemo-edit-btn">Edit</a></td>
-                    <td><a href="" th:href="${'api/npd/orders/update/manage-order-delete/' + {sb.key}}" class="templatemo-link">Delete</a></td>
+                    <td><a href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + ${'/api/npd/orders/update/manage-order-delete/' + {sb.key}}" class="templatemo-link">Delete</a></td>
+                    <td><a href="" th:href="'http://'+ ${@environment.getProperty('server.hostname')} + ':'+ ${@environment.getProperty('server.port')} + ${'/api/npd/orders/invoice/' + {sb.key}}" class="templatemo-link">Download</a></td>
                   </tr>       
                 </tbody>
               </table>  

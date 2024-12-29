@@ -1,6 +1,7 @@
 package com.apps.digiple.npdapp.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +11,7 @@ import org.thymeleaf.util.ListUtils;
 import com.apps.digiple.npdapp.bean.Order2Product;
 import com.apps.digiple.npdapp.bean.Orders;
 import com.apps.digiple.npdapp.bean.Product;
+import com.apps.digiple.npdapp.reports.JasperProduct;
 
 public class OrderHelper {
 
@@ -51,15 +53,23 @@ public class OrderHelper {
 				o2pList.add(o2p);
 			}
 		});
-//		if (!ListUtils.isEmpty(o2pList) && !ListUtils.isEmpty(content)) {
-//			List<Product> products = o2pList.stream().map(o2p -> o2p.getProduct()).collect(Collectors.toList());
-//			content.removeAll(ListUtils.isEmpty(products) ? Collections.EMPTY_LIST : products);
-//		}
-//		List<Order2Product> list = createO2PProducts(content);
-//		for (Order2Product o2p : o2pList) {
-//			list.add(o2p);
-//		}
 		return o2pList;
+	}
+
+	public static Collection<JasperProduct> LoadJasperProduct(List<Order2Product> order2product) {
+		Collection<JasperProduct> jProductList = new ArrayList<JasperProduct>();
+		for (Order2Product o2p : order2product) {
+			JasperProduct jProduct = new JasperProduct();
+			jProduct.setProductName(o2p.getProduct().getProductName());
+			jProduct.setProductDetail(o2p.getProduct().getProductDetails());
+			jProduct.setQntyEntry(o2p.getQuantity());
+			jProduct.setProductCost(o2p.getProduct().getCost());
+			jProductList.add(jProduct);
+		}
+		if (ListUtils.isEmpty(order2product)) {
+			jProductList.add(new JasperProduct());
+		}
+		return jProductList;
 	}
 
 }

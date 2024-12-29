@@ -78,7 +78,6 @@ public class Product{
     @JsonProperty("Product Type")
     @Transient
 	private String proTypeString;
-
     
     public Product() {  }
 

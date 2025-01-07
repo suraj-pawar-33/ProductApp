@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
+  
+  
+  	<bean id="columnKey" class="com.apps.digiple.npdapp.models.FieldInfo">
+		<!--  -->
+		<constructor-arg value="Product Key"></constructor-arg>  
+  		<constructor-arg value="product_key"></constructor-arg>  
+  		<constructor-arg value="key"></constructor-arg> 
+  		<constructor-arg>
+  		 	<value type="com.apps.digiple.npdapp.table.edit.FieldDataType">LONG_FIELD</value>
+  		 </constructor-arg> 
+	</bean>
+	
+	<bean id="fieldInfo01" class="com.apps.digiple.npdapp.models.FieldInfo">
+		<!--  -->
+		<constructor-arg value="Product Name"></constructor-arg>  
+  		<constructor-arg value="product_name"></constructor-arg>  
+  		<constructor-arg value="stringProperty01"></constructor-arg> 
+  		<constructor-arg>
+  		 	<value type="com.apps.digiple.npdapp.table.edit.FieldDataType">STRING_FIELD</value>
+  		 </constructor-arg> 
+	</bean> 
+	<bean id="fieldInfo02" class="com.apps.digiple.npdapp.models.FieldInfo">
+		<!--  -->
+		<constructor-arg value="Short Name"></constructor-arg>  
+  		<constructor-arg value="short_name"></constructor-arg> 
+  		<constructor-arg value="stringProperty02"></constructor-arg> 
+  		<constructor-arg>
+  		 	<value type="com.apps.digiple.npdapp.table.edit.FieldDataType">STRING_FIELD</value>
+  		 </constructor-arg> 
+	</bean> 
+	<bean id="fieldInfo03" class="com.apps.digiple.npdapp.models.FieldInfo">
+		<!--  -->
+		<constructor-arg value="Product Type"></constructor-arg>  
+  		<constructor-arg value="pro_type_key"></constructor-arg> 
+  		<constructor-arg value="stringProperty03"></constructor-arg> 
+  		<constructor-arg>
+  		 	<value type="com.apps.digiple.npdapp.table.edit.FieldDataType">STRING_FIELD</value>
+  		 </constructor-arg> 
+	</bean> 
+	<bean id="fieldInfo04" class="com.apps.digiple.npdapp.models.FieldInfo">
+		<!--  -->
+		<constructor-arg value="Cost"></constructor-arg>  
+  		<constructor-arg value="cost"></constructor-arg> 
+  		<constructor-arg value="stringProperty04"></constructor-arg> 
+  		<constructor-arg>
+  		 	<value type="com.apps.digiple.npdapp.table.edit.FieldDataType">STRING_FIELD</value>
+  		 </constructor-arg> 
+	</bean>  
+	<bean id="fieldInfo05" class="com.apps.digiple.npdapp.models.FieldInfo">
+		<!--  -->
+		<constructor-arg value="SubCost"></constructor-arg>  
+  		<constructor-arg value="subscri_cost"></constructor-arg> 
+  		<constructor-arg value="stringProperty05"></constructor-arg> 
+  		<constructor-arg>
+  		 	<value type="com.apps.digiple.npdapp.table.edit.FieldDataType">STRING_FIELD</value>
+  		 </constructor-arg> 
+	</bean> 
+	
+	<!--  Add new field to the data edit panel -->
+	
+	<bean id="fieldGridPane" class="com.apps.digiple.npdapp.view.general.FieldGridPane">
+		<!--  -->
+		<constructor-arg>
+  			<array>
+  				<ref bean="columnKey"/>
+				<ref bean="fieldInfo01"/> 
+				<ref bean="fieldInfo02"/> 
+				<ref bean="fieldInfo03"/> 
+				<ref bean="fieldInfo04"/> 
+				<ref bean="fieldInfo05"/> 
+				<!--  Add new field to the data edit panel -->
+  			</array>
+		</constructor-arg>  
+	</bean> 
+	<bean id="saveButtons" class="com.apps.digiple.npdapp.view.general.ControlsGridPane">
+		<!--  -->
+		<constructor-arg value="SaveButtons"></constructor-arg> 
+		
+		<constructor-arg>
+  			<array>
+				<value>btn_save</value>
+  				<value>Save</value>
+				<value>btn_clear</value>
+  		 		<value>Clear</value>
+  			</array>
+  		</constructor-arg>
+	</bean> 
+	<bean id="updateButtons" class="com.apps.digiple.npdapp.view.general.ControlsGridPane">
+		<!--  -->
+		<constructor-arg value="UpdateButtons"></constructor-arg>   
+  		<constructor-arg>
+  			<array>
+				<value>btn_update</value>
+  				<value>Update</value>
+				<value>btn_clear</value>
+  		 		<value>Clear</value>
+				<value>btn_delete</value>
+  		 		<value>Delete</value>
+  			</array>
+  		</constructor-arg>
+	</bean> 
+	
+	<bean id="generalDataEditPanel" class="com.apps.digiple.npdapp.view.general.GeneralDataEditPanel">
+		<!--  -->
+		<constructor-arg>
+			<ref bean="fieldGridPane"/> </constructor-arg>  
+		<constructor-arg>
+  			<array>
+				<ref bean="saveButtons"/> 
+				<ref bean="updateButtons"/> 
+  			</array>
+		</constructor-arg>
+	</bean> 
+	
+	<bean id="generalTablePanel" class="com.apps.digiple.npdapp.view.general.GeneralTablePanel">
+		<!--  --> 
+		<constructor-arg value="product"></constructor-arg> 
+		<constructor-arg>
+  			<array>
+  				<ref bean="columnKey"/>
+				<ref bean="fieldInfo01"/> 
+				<ref bean="fieldInfo02"/> 
+				<ref bean="fieldInfo03"/> 
+				<ref bean="fieldInfo04"/> 
+				<ref bean="fieldInfo05"/>
+				<!--  Add new column to the table panel -->
+  			</array>
+		</constructor-arg> 
+	</bean> 
+			  
+  	<bean id="generalDataProcessor" class="com.apps.digiple.npdapp.impl.GeneralDataProcessor">
+		<!--  -->
+		<constructor-arg>
+			<ref bean="generalDataEditPanel"/> </constructor-arg>  
+		<constructor-arg>
+			<ref bean="generalTablePanel"/> </constructor-arg>  
+	</bean> 
+</beans>   

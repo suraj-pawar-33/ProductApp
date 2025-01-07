@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
+  
+  
+  	<bean id="menuEventHandler" class="com.apps.digiple.npdapp.impl.events.MenuEventHandler"></bean>
+  	
+  	<bean id="menuSliderBtn" class="com.apps.digiple.npdapp.view.nodes.SliderButton">
+  		<constructor-arg value="menuSlider"></constructor-arg>  
+  		<constructor-arg value=""></constructor-arg>  
+  		<constructor-arg><ref bean="menuEventHandler"/> </constructor-arg>  
+	</bean>  	
+	<bean id="smMenuSliderBtn" class="com.apps.digiple.npdapp.view.nodes.SliderButton">
+  		<constructor-arg value="menuSlider"></constructor-arg>  
+  		<constructor-arg value=""></constructor-arg>  
+  		<constructor-arg><ref bean="menuEventHandler"/> </constructor-arg>  
+	</bean> 
+  	<bean id="menuBtnOrder" class="com.apps.digiple.npdapp.view.nodes.CtMenuButton">
+  		<constructor-arg value="order"></constructor-arg>  
+  		<constructor-arg value="Order"></constructor-arg>  
+  		<constructor-arg><ref bean="menuEventHandler"/> </constructor-arg>  
+	</bean>
+  	<bean id="menuBtnSub" class="com.apps.digiple.npdapp.view.nodes.CtMenuButton">
+  		<constructor-arg value="sub"></constructor-arg>  
+  		<constructor-arg value="Subscription"></constructor-arg>  
+  		<constructor-arg><ref bean="menuEventHandler"/> </constructor-arg> 
+	</bean>
+  	<bean id="menuBtnBank" class="com.apps.digiple.npdapp.view.nodes.CtMenuButton">
+  		<constructor-arg value="bank"></constructor-arg>  
+  		<constructor-arg value="Bank"></constructor-arg>  
+  		<constructor-arg><ref bean="menuEventHandler"/> </constructor-arg>  
+	</bean>
+  	<bean id="menuBtnContact" class="com.apps.digiple.npdapp.view.nodes.CtMenuButton">
+  		<constructor-arg value="contact"></constructor-arg>  
+  		<constructor-arg value="Contacts"></constructor-arg>  
+  		<constructor-arg><ref bean="menuEventHandler"/> </constructor-arg>  
+	</bean>
+  	<bean id="menuBtnProduct" class="com.apps.digiple.npdapp.view.nodes.CtMenuButton">
+  		<constructor-arg value="product"></constructor-arg>  
+  		<constructor-arg value="Products"></constructor-arg>  
+  		<constructor-arg><ref bean="menuEventHandler"/> </constructor-arg>  
+	</bean>
+  	<bean id="menuBtnGeneral" class="com.apps.digiple.npdapp.view.nodes.CtMenuButton">
+  		<constructor-arg value="general"></constructor-arg>  
+  		<constructor-arg value="General"></constructor-arg>  
+  		<constructor-arg><ref bean="menuEventHandler"/> </constructor-arg>  
+	</bean>
+  	
+  	<bean id="menuPanel" class="com.apps.digiple.npdapp.view.MenuPanel">
+  		<constructor-arg><ref bean="smMenuSliderBtn" /></constructor-arg> 
+  		<constructor-arg>
+  			<array>
+				<ref bean="menuBtnOrder"/> 
+				<ref bean="menuBtnSub"/> 
+				<ref bean="menuBtnBank"/> 
+				<ref bean="menuBtnContact"/>
+				<ref bean="menuBtnProduct"/> 
+				<ref bean="menuBtnGeneral"/> 
+  			</array>
+		</constructor-arg> 
+  	</bean>
+  	<bean id="smallMPanel" class="com.apps.digiple.npdapp.view.SmallMenuPanel">
+  		<constructor-arg><ref bean="menuSliderBtn"/></constructor-arg> 
+	</bean>
+  	<bean id="contentPanel" class="com.apps.digiple.npdapp.view.ContentPanel"></bean>
+  	
+  	
+	<bean id="mainPanel" class="com.apps.digiple.npdapp.view.MainPanel">
+		<!--  -->
+		<constructor-arg>
+			<ref bean="menuPanel"/> </constructor-arg>  
+		<constructor-arg>
+			<ref bean="smallMPanel"/> </constructor-arg>  
+		<constructor-arg>
+			<ref bean="contentPanel"/> </constructor-arg>
+			
+		<property name="minHeight">  
+			<value>500</value>  
+		</property>  
+		<property name="minWidth">  
+			<value>200</value>  
+		</property>  
+		<property name="prefHeight">  
+			<value>1100</value>  
+		</property>  
+		<property name="prefWidth">  
+			<value>650</value>  
+		</property>  
+		<property name="maxHeight">  
+			<value>1500</value>  
+		</property>  
+		<property name="maxWidth">  
+			<value>900</value>  
+		</property>   
+	</bean> 
+</beans>   
